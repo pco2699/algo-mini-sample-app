@@ -1,0 +1,13 @@
+version: 2.1
+
+orbs:
+  firebase-deploy: cloudliner/firebase-deploy@0.0.2
+
+workflows:
+  version: 2
+  deploy_firebase:
+    jobs:
+      - firebase-deploy/firebase-deploy
+          filters:
+            branches:
+              only: master
