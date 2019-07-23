@@ -1,13 +1,43 @@
 version: 2.1
-
 orbs:
-  firebase-deploy: cloudliner/firebase-deploy@0.0.2
-
+  firebase-deploy: azdevs/firebase-deploy@1.0.0
+jobs:
+  build:
+    docker:
+      - image: 'circleci/node:lts'
+    steps:
+      - checkout
+      - restore_cache:
+          key: 'v1-package-{{ checksum "package-lock.json" }}'
+      - run: npm install
+      - save_cache:
+          key: 'v1-package-{{ checksum "package-lock.json" }}'
+          paths:
+            - ./node_modules
+      - run: yarn build
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - dist
+            - firebase.json
+            - .firebaserc
+            - firestore.rules
+            - firestore.indexes.json
+  deploy:
+    docker:
+      - image: 'circleci/node:lts'
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - firebase-deploy/deploy:
+          token: $FIREBASE_DEPLOY_TOKEN
 workflows:
-  version: 2
-  deploy_firebase:
+  build-and-deploy:
     jobs:
-      - firebase-deploy/firebase-deploy:
+      - build
+      - deploy:
+          requires:
+            - build
           filters:
             branches:
               only: master
