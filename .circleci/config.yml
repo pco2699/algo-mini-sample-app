@@ -14,7 +14,7 @@ jobs:
           key: 'v1-package-{{ checksum "package-lock.json" }}'
           paths:
             - ./node_modules
-      - run: yarn build
+      - run: npm generate
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
