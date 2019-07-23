@@ -16,7 +16,7 @@ jobs:
             - ./node_modules
       - run: npm run generate
       - persist_to_workspace:
-          root: /tmp/workspace
+          root: /home/circleci/app
           paths:
             - dist
             - firebase.json
@@ -28,7 +28,7 @@ jobs:
       - image: 'circleci/node:lts'
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: /home/circleci/app
       - firebase-deploy/deploy:
           token: $FIREBASE_DEPLOY_TOKEN
 workflows:
