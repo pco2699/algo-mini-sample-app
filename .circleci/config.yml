@@ -7,7 +7,7 @@ workflows:
   version: 2
   deploy_firebase:
     jobs:
-      - firebase-deploy/firebase-deploy
+      - firebase-deploy/firebase-deploy:
           filters:
             branches:
               only: master
