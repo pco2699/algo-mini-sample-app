@@ -62,7 +62,7 @@ export default {
         {
           icon: 'mdi-chart-bubble',
           title: 'ソート',
-          to: '/sort'
+          to: '/search'
         }
       ],
       miniVariant: false,
