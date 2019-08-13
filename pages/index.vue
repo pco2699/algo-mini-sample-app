@@ -5,5 +5,6 @@
 </template>
 
 <script>
-export default {}
+import Vue from 'vue'
+export default class extends Vue {}
 </script>

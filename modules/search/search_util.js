@@ -7,14 +7,14 @@ const contents = [
 ]
 
 const ticketGenerator = (num) => {
-  const obj = []
+  const tickets = []
   for (let i = 1; i <= num; i++) {
-    obj.push({
+    tickets.push({
       id: i,
       content: contents[Math.floor(Math.random() * contents.length)]
     })
   }
-  return obj
+  return tickets
 }
 
 export default ticketGenerator
