@@ -7,14 +7,12 @@ const contents = [
 ]
 
 const ticketGenerator = (num) => {
-  const tickets = []
-  for (let i = 1; i <= num; i++) {
-    tickets.push({
-      id: i,
+  return Array(num)
+    .fill(null)
+    .map((_, i) => ({
+      id: i + 1,
       content: contents[Math.floor(Math.random() * contents.length)]
-    })
-  }
-  return tickets
+    }))
 }
 
 export default ticketGenerator
