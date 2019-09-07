@@ -69,6 +69,12 @@ export default class Search extends Vue {
       this.errors.push('探索方法を入力してください')
     }
 
+    if (this.ticketNumber < 0) {
+      this.errors.push('チケット番号は正の数を入力してください')
+    } else if (this.ticketNumber > this.ticketAmount) {
+      this.errors.push('チケット番号は、チケット数内で入力してください')
+    }
+
     if (!this.errors.length) {
       return true
     }

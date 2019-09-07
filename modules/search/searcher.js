@@ -1,18 +1,18 @@
 export default class Searcher {
   static linearSearch(tickets, target) {
     const result = { count: 1, ticket: null }
-    tickets.forEach((ticket) => {
+    for (const ticket of tickets) {
       if (ticket.id === target) {
         result.ticket = ticket
         return result
       }
       result.count++
-    })
+    }
     return null
   }
 
   static binarySearch(tickets, target) {
-    if (tickets.length === 0) {
+    if (tickets.length <= 0) {
       return null
     }
     const result = { count: 1, ticket: null }
