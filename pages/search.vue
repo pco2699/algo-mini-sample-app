@@ -1,61 +1,58 @@
 <template>
-  <v-layout>
-    <v-flex class="text-center ms-10">
-      <v-form ref="form">
-        <v-text-field v-model="ticketNumber" label="チケット番号" />
-        <v-slider
-          v-model="ticketAmount"
-          class="mt-7"
-          thumb-size="32"
-          thumb-label="always"
-          min="10"
-          max="10000"
-          step="1000"
-          label="チケット数"
-        />
-        <v-radio-group v-model="searchMethod" label="探索方法" row>
-          <v-radio label="線形探索" value="liner" />
-          <v-radio label="二分探索" value="binary" />
-        </v-radio-group>
-        <v-input :error-count="errors.length" :error-messages="errors" />
-        <v-btn class="primary" @click="checkForm() && execSearch()">
-          検索
-        </v-btn>
-      </v-form>
-      <div v-if="submitted" class="mt-2">
-        <div v-if="result">
-          <p>お探しのチケットが見つかりました！</p>
-          <v-card max-width="344" class="mx-auto">
-            <v-card-title>ID: {{ result.ticket.id }}</v-card-title>
-            <v-card-text>{{ result.ticket.content }}</v-card-text>
-          </v-card>
-          <p class="mt-2">探すのに{{ result.count }}回 かかりました！</p>
-        </div>
-        <div v-else>
-          <p>残念ながらチケットは見つかりませんでした...</p>
-        </div>
+  <div class="text-center ms-10">
+    <v-form>
+      <v-text-field v-model="ticketNumber" label="チケット番号" />
+      <v-slider
+        v-model="ticketAmount"
+        class="mt-7"
+        thumb-size="32"
+        thumb-label
+        min="10"
+        max="10000"
+        step="1000"
+        label="チケット数"
+      />
+      <v-radio-group v-model="searchMethod" label="探索方法" row>
+        <v-radio label="線形探索" value="linear" />
+        <v-radio label="二分探索" value="binary" />
+      </v-radio-group>
+      <v-input :error-count="errors.length" :error-messages="errors" />
+      <v-btn class="primary" @click="checkForm() && execSearch()">
+        検索
+      </v-btn>
+    </v-form>
+    <div v-if="submitted" class="mt-2">
+      <div v-if="result">
+        <p>お探しのチケットが見つかりました！</p>
+        <v-card max-width="344" class="mx-auto">
+          <v-card-title>ID: {{ result.ticket.id }}</v-card-title>
+          <v-card-text>{{ result.ticket.content }}</v-card-text>
+        </v-card>
+        <p class="mt-2">探すのに{{ result.count }}回 かかりました！</p>
       </div>
-    </v-flex>
-  </v-layout>
+      <div v-else>
+        <p>残念ながらチケットは見つかりませんでした...</p>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
-import { Vue, Component, Provide } from 'nuxt-property-decorator'
+import { Vue, Component } from 'nuxt-property-decorator'
 import ticketGenerator from '../modules/search/search_util'
 import Searcher from '../modules/search/searcher'
 
 @Component
 export default class Search extends Vue {
-  @Provide() ticketNumber = ''
+  constructor() {
+    super()
 
-  @Provide() searchMethod = ''
-
-  @Provide() ticketAmount = ''
-
-  @Provide() submitted = false
-
-  @Provide() result = null
-
-  @Provide() errors = []
+    this.ticketNumber = ''
+    this.searchMethod = ''
+    this.ticketAmount = ''
+    this.submitted = false
+    this.result = null
+    this.errors = []
+  }
 
   checkForm() {
     this.errors = []
@@ -85,12 +82,8 @@ export default class Search extends Vue {
     let result = null
 
     if (this.searchMethod === 'binary') {
-      // eslint-disable-next-line no-console
-      console.log('binary search executed ...')
       result = Searcher.binarySearch(tickets, Number(this.ticketNumber))
-      // eslint-disable-next-line no-console
-      console.log(result)
-    } else if (this.searchMethod === 'liner') {
+    } else if (this.searchMethod === 'linear') {
       result = Searcher.linearSearch(tickets, Number(this.ticketNumber))
     }
 

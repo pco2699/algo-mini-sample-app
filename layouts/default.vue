@@ -50,7 +50,7 @@ export default class Default extends Vue {
     },
     {
       icon: 'mdi-chart-bubble',
-      title: 'ソート',
+      title: '探索',
       to: '/search'
     }
   ]
