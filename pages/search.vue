@@ -72,9 +72,7 @@ export default class Search extends Vue {
       this.errors.push('チケット番号は、チケット数内で入力してください')
     }
 
-    if (!this.errors.length) {
-      return true
-    }
+    return !this.errors.length
   }
 
   execSearch() {
